@@ -15,25 +15,29 @@
 #include <string>
 #include <exception>
 #include <iostream>
+#include <fstream>
 #include "Bureaucrat.hpp"
 
 class AForm
 {
 	private :
 		const std::string _name;
+		const std::string _target;
 		bool _state;
 		const int _gradeSign;
 		const int _gradeExec;
 	public :
-		AForm(const std::string& name, int gradeSign, int gradeExec);
+		AForm(const std::string& name, int gradeSign, int gradeExec, const std::string& target);
 		AForm(const AForm& cpy);
-		~AForm();
+		virtual ~AForm();
 		const AForm& operator=(const AForm& rhs);
-		const std::string getName(void) const;
+		const std::string& getName(void) const;
 		bool getState(void) const;
 		int getGradeSign(void) const;
 		int getGradeExec(void) const;
+		const std::string&	getTarget(void) const;
 		void beSigned(const Bureaucrat& b);
+		virtual void	execute(const Bureaucrat& executor) const = 0;
 		class GradeTooHighException : public std::exception
 		{
 			public :

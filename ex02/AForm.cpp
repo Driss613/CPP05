@@ -12,7 +12,7 @@
 
 #include "AForm.hpp"
 
-AForm::AForm(const std::string& name, int gradeSign, int gradeExec) : _name(name), _state(false), _gradeSign(gradeSign), _gradeExec(gradeExec)
+AForm::AForm(const std::string& name, int gradeSign, int gradeExec, const std::string& target) : _name(name), _state(false), _gradeSign(gradeSign), _gradeExec(gradeExec), _target(target)
 {
 	if (_gradeSign < 1 || _gradeExec < 1)
 		throw GradeTooHighException();
@@ -20,7 +20,7 @@ AForm::AForm(const std::string& name, int gradeSign, int gradeExec) : _name(name
 		throw GradeTooLowException();
 }
 
-AForm::AForm(const AForm& cpy) : _name(cpy._name), _state(cpy._state), _gradeSign(cpy._gradeSign), _gradeExec(cpy._gradeExec)
+AForm::AForm(const AForm& cpy) : _name(cpy._name), _state(cpy._state), _gradeSign(cpy._gradeSign), _gradeExec(cpy._gradeExec), _target(cpy._target)
 {}
 
 AForm::~AForm()
@@ -37,11 +37,11 @@ const AForm& AForm::operator=(const AForm& rhs)
 
 std::ostream& operator<<(std::ostream& os, const AForm& rhs)
 {
-	os << rhs.getName() << ", AForm grade sign " << rhs.getGradeSign() << " and grade exec " << rhs.getGradeExec() << " sign : " << (rhs.getState() ? "yes" : "no") << ".";
+	os << rhs.getName() << ", AForm grade sign " << rhs.getGradeSign() << " and grade exec " << rhs.getGradeExec() << " sign : " << (rhs.getState() ? "yes" : "no") << "with target : " << rhs.getTarget() <<".";
 	return os;
 }
 
-const std::string AForm::getName(void) const
+const std::string& AForm::getName(void) const
 {
 	return _name;
 }
@@ -59,6 +59,11 @@ int AForm::getGradeSign(void) const
 int AForm::getGradeExec(void) const
 {
 	return _gradeExec;
+}
+
+const std::string& AForm::getTarget(void) const
+{
+	return _target;
 }
 
 void AForm::beSigned(const Bureaucrat& b)
